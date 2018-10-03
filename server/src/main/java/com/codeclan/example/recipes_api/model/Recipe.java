@@ -3,6 +3,7 @@ package com.codeclan.example.recipes_api.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
+import java.util.List;
 
 @Entity
 @Table(name = "recipes")
@@ -36,8 +37,11 @@ public class Recipe {
     @Column
     private int cookTime;
 
-    @Column
-    private HashMap<Ingredient, Integer> ingredients;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ingredients_in_recipe",
+                joinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"))
+    private List<Ingredient> ingredients;
 
     @Column
     private HashMap<Integer, String> method;
@@ -47,7 +51,6 @@ public class Recipe {
         return id;
     }
 
-    ;
 
     public void setId(Long id) {
         this.id = id;
@@ -101,11 +104,11 @@ public class Recipe {
         this.category = category;
     }
 
-    public HashMap<Ingredient, Integer> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(HashMap<Ingredient, Integer> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
