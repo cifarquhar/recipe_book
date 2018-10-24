@@ -2,6 +2,7 @@ package com.codeclan.example.recipes_api.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Recipe {
     private String name;
 
     @Column
-    private String category;
+    private Category category;
 
     @Column
     private String description;
@@ -37,20 +38,37 @@ public class Recipe {
     @Column
     private int cookTime;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "ingredients_in_recipe",
-                joinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"))
+                joinColumns = {
+                    @JoinColumn(name = "recipe_id", nullable = false, updatable = false)
+                },
+                inverseJoinColumns = {
+                    @JoinColumn(name = "ingredient_id", nullable = false, updatable = false)
+                })
     private List<Ingredient> ingredients;
 
     @Column
     private HashMap<Integer, String> method;
 
 
+    public Recipe() {
+    }
+
+    public Recipe(@NotNull String name, Category category, String description, int servings, int prepTime, int cookTime, HashMap<Integer, String> method) {
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.servings = servings;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.method = method;
+        this.ingredients = new ArrayList<>();
+    }
+
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -96,11 +114,11 @@ public class Recipe {
         this.cookTime = cookTime;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

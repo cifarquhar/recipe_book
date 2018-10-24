@@ -2,6 +2,7 @@ package com.codeclan.example.recipes_api.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,28 @@ public class Ingredient {
 
     @NotNull
     @Column
-    private String servingType;
+    private ServingType servingType;
 
-    @ManyToMany(mappedBy = "ingredients")
+    @ManyToMany
+    @JoinTable(name = "ingredients_in_recipe",
+            joinColumns = {
+                    @JoinColumn(name = "ingredient_id", nullable = false, updatable = false)
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "recipe_id", nullable = false, updatable = false)
+            })
     private List<Recipe> recipes;
 
+
+    public Ingredient(){
+
+    }
+
+    public Ingredient(@NotNull String name, @NotNull ServingType servingType) {
+        this.name = name;
+        this.servingType = servingType;
+        this.recipes = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -45,11 +63,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public String getServingType() {
+    public ServingType getServingType() {
         return servingType;
     }
 
-    public void setServingType(String servingType) {
+    public void setServingType(ServingType servingType) {
         this.servingType = servingType;
     }
 
