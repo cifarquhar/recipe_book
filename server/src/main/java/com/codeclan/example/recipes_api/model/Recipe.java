@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "recipes")
@@ -46,7 +47,8 @@ public class Recipe {
                 inverseJoinColumns = {
                     @JoinColumn(name = "ingredient_id", nullable = false, updatable = false)
                 })
-    private List<Ingredient> ingredients;
+    @MapKeyColumn(name = "ingredient_count")
+    private Map<Integer, Ingredient> ingredients;
 
     @Column
     private HashMap<Integer, String> method;
@@ -63,7 +65,7 @@ public class Recipe {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.method = method;
-        this.ingredients = new ArrayList<>();
+        this.ingredients = new HashMap<>();
     }
 
     public Long getId() {
@@ -122,11 +124,11 @@ public class Recipe {
         this.category = category;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Map<Integer, Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(HashMap<Integer, Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
