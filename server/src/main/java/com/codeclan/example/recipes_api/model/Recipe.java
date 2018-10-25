@@ -47,8 +47,7 @@ public class Recipe {
                 inverseJoinColumns = {
                     @JoinColumn(name = "ingredient_id", nullable = false, updatable = false)
                 })
-    @MapKeyColumn(name = "ingredient_count")
-    private Map<Integer, Ingredient> ingredients;
+    private List<Ingredient> ingredients;
 
     @Column
     private HashMap<Integer, String> method;
@@ -65,7 +64,7 @@ public class Recipe {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.method = method;
-        this.ingredients = new HashMap<>();
+        this.ingredients = new ArrayList<>();
     }
 
     public Long getId() {
@@ -124,11 +123,11 @@ public class Recipe {
         this.category = category;
     }
 
-    public Map<Integer, Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(HashMap<Integer, Ingredient> ingredients) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
