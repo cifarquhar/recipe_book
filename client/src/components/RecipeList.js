@@ -18,12 +18,12 @@ class RecipeList extends React.Component {
   callAPI() {
     fetch("http://localhost:8080/recipes")
       .then(response => response.json())
-      .then(data => this.setState({ isLoaded: true, recipes: this.mapRecipeData(data.content) }));
+      .then(data => this.setState({ isLoaded: true, recipes: this.mapRecipeData(data._embedded.recipes) }));
   }
 
   mapRecipeData(recipes) {
     return recipes.map(((recipe, index) => {
-      return <recipe key={index} recipe={recipe} handleDelete={this.deleterecipe.bind(this)} />;
+      return <Recipe key={index} recipe={recipe} />;
     }));
   }
 
@@ -31,7 +31,6 @@ class RecipeList extends React.Component {
     const { isLoaded, recipes } = this.state;
 
     if (!isLoaded) {
-      console.log("got recipes");
       return <p>Waiting for recipe data...</p>
     }
 
