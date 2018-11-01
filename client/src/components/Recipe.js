@@ -34,7 +34,7 @@ class Recipe extends React.Component{
         <div className="recipe-summary" onClick={this.showModal.bind(this)}>
           <div className="summary-header">
             <div className="summary-details">{recipe.name}</div>
-            <div className="summary-details">{recipe.category.charAt(0) + recipe.category.slice(1).toLowerCase()}</div>
+            <div className="summary-details">{recipe.category.charAt(0) + String.slice(1).toLowerCase()}</div>
             {/* <div className="favourite-logo"><Star beer={beer} /></div> */}
           </div>
           <p>{recipe.description}</p>

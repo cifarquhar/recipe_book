@@ -2,22 +2,17 @@ package com.codeclan.example.recipes_api.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "recipes")
-public class Recipe {
+public class Recipe implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "recipe_generator")
-    @SequenceGenerator(
-            name = "recipe_generator",
-            sequenceName = "recipe_sequence",
-            initialValue = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -39,15 +34,8 @@ public class Recipe {
     @Column
     private int cookTime;
 
-    @ManyToMany
-    @JoinTable(name = "ingredients_in_recipe",
-                joinColumns = {
-                    @JoinColumn(name = "recipe_id", nullable = false, updatable = false)
-                },
-                inverseJoinColumns = {
-                    @JoinColumn(name = "ingredient_id", nullable = false, updatable = false)
-                })
-    private List<Ingredient> ingredients;
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    private List<Pairing> pairings;
 
     @Column
     private HashMap<Integer, String> method;
@@ -64,7 +52,7 @@ public class Recipe {
         this.prepTime = prepTime;
         this.cookTime = cookTime;
         this.method = method;
-        this.ingredients = new ArrayList<>();
+        this.pairings = new ArrayList<>();
     }
 
     public Long getId() {
@@ -123,12 +111,12 @@ public class Recipe {
         this.category = category;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public List<Pairing> getPairings() {
+        return pairings;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setPairings(ArrayList<Pairing> pairings) {
+        this.pairings = pairings;
     }
 
     public HashMap<Integer, String> getMethod() {

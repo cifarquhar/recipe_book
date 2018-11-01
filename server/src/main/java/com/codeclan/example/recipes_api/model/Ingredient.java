@@ -10,12 +10,7 @@ import java.util.List;
 public class Ingredient {
 
     @Id
-    @GeneratedValue(generator = "ingredient_generator")
-    @SequenceGenerator(
-            name = "ingredient_generator",
-            sequenceName = "ingredient_sequence",
-            initialValue = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -26,15 +21,8 @@ public class Ingredient {
     @Column
     private ServingType servingType;
 
-    @ManyToMany
-    @JoinTable(name = "ingredients_in_recipe",
-            joinColumns = {
-                    @JoinColumn(name = "ingredient_id", nullable = false, updatable = false)
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "recipe_id", nullable = false, updatable = false)
-            })
-    private List<Recipe> recipes;
+    @OneToMany(mappedBy = "ingredient", fetch = FetchType.LAZY)
+    private List<Pairing> pairings;
 
 
     public Ingredient(){
@@ -44,7 +32,7 @@ public class Ingredient {
     public Ingredient(@NotNull String name, @NotNull ServingType servingType) {
         this.name = name;
         this.servingType = servingType;
-        this.recipes = new ArrayList<>();
+        this.pairings = new ArrayList<>();
     }
 
     public Long getId() {
@@ -71,11 +59,11 @@ public class Ingredient {
         this.servingType = servingType;
     }
 
-    public List<Recipe> getRecipes() {
-        return recipes;
+    public List<Pairing> getPairings() {
+        return pairings;
     }
 
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
+    public void setPairings(List<Pairing> pairings) {
+        this.pairings = pairings;
     }
 }
