@@ -86,7 +86,14 @@ class RecipeForm extends Component {
         <form action="" onSubmit={this.handleSubmit}>
           <div className="form-content">
             <label htmlFor="name">Name: </label>
-            <input type="text" placeholder="name" value={s.recipeName} onChange={this.handleNameChange} id="name" name="name" />
+            <input 
+              type="text" 
+              placeholder="name" 
+              value={s.recipeName} 
+              onChange={this.handleNameChange} 
+              id="name" 
+              name="name" 
+            />
           </div>
           <div className="form-content">
             <label htmlFor="category">Category: </label>
@@ -96,19 +103,47 @@ class RecipeForm extends Component {
           </div>
           <div className="form-content">
             <label htmlFor="description">Description: </label>
-            <textarea type="text" placeholder="description" value={s.recipeDescription} onChange={this.handleDescriptionChange} id="description" name="description" />
+            <textarea 
+              type="text" 
+              placeholder="description" 
+              value={s.recipeDescription} 
+              onChange={this.handleDescriptionChange} 
+              id="description" 
+              name="description" 
+            />
           </div>
           <div className="form-content">
             <label htmlFor="servings">Servings: </label>
-            <input type="number" min="0" placeholder="0" onChange={this.handleServingsChange} id="servings" name="servings" />
+            <input 
+              type="number" 
+              min="0" 
+              placeholder="0" 
+              onChange={this.handleServingsChange} 
+              id="servings" 
+              name="servings" 
+            />
           </div>
           <div className="form-content">
             <label htmlFor="prepTime">Preparation Time (mins): </label>
-            <input type="number" min="0" placeholder="0" onChange={this.handlePrepTimeChange} id="prepTime" name="prepTime" />
+            <input 
+              type="number" 
+              min="0" 
+              placeholder="0" 
+              onChange={this.handlePrepTimeChange} 
+              id="prepTime" 
+              name="prepTime" 
+            />
           </div>
           <div className="form-content">
             <label htmlFor="cookTime">Cooking Time (mins): </label>
-            <input type="number" min="0" placeholder="0" onChange={this.handleCookTimeChange} id="cookTime" name="cookTime" />
+            <input 
+              type="number" 
+              min="0" 
+              placeholder="0" 
+              onChange={this.handleCookTimeChange} 
+              id="cookTime" 
+              name="cookTime" 
+            />
           </div>
 
           <div className="form-content">
