@@ -4,8 +4,8 @@ import './App.css';
 import NavBar from './components/NavBar';
 import Home from "./components/Home";
 import RecipeList from './components/RecipeList';
+import FormContainer from "./components/FormContainer"
 // import Favourites from "./components/Favourites";
-// import Add from "./components/Add";
 
 class App extends Component {
 
@@ -19,7 +19,7 @@ class App extends Component {
 
           <Route exact path="/" component={Home} />
           <Route path="/recipes" component={RecipeList} />
-          {/* <Route path="/add" component={Add} /> */}
+          <Route path="/add" component={FormContainer} />
 
         </div>
       </Router>
