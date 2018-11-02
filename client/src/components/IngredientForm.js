@@ -26,12 +26,29 @@ class IngredientForm extends Component {
 
   handleSubmit(evt){
     evt.preventDefault();
-    console.log(this.state);
+    
+    const dataToSend = {
+      name: this.state.ingredientName,
+      servingType: this.state.ingredientServingType
+    };
+    console.log(dataToSend);
+
     this.setState({
       ingredientName: "",
       ingredientServingType: ""
     });
     evt.target.reset();
+
+    fetch("http://localhost:8080/ingredients", {
+      method: "POST",
+      body: JSON.stringify(dataToSend),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => { return res })
+      .catch(err => console.log(err))
   }
 
   render() {
