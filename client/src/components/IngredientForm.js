@@ -20,7 +20,6 @@ class IngredientForm extends Component {
   }
 
   handleServingTypeChange(evt){
-    console.log(evt.target.value)
     this.setState({ingredientServingType: evt.target.value.toUpperCase()});
   }
 
@@ -31,7 +30,6 @@ class IngredientForm extends Component {
       name: this.state.ingredientName,
       servingType: this.state.ingredientServingType
     };
-    console.log(dataToSend);
 
     this.setState({
       ingredientName: "",
@@ -65,7 +63,14 @@ class IngredientForm extends Component {
         <form action="" onSubmit={this.handleSubmit}>
           <div className="form-content">
             <label htmlFor="name">Name: </label>
-            <input type="text" placeholder="Name" value={s.ingredientName} onChange={this.handleNameChange} id="name" name="name" />
+            <input 
+              type="text" 
+              placeholder="Name" 
+              value={s.ingredientName} 
+              onChange={this.handleNameChange} 
+              id="name" 
+              name="name" 
+            />
           </div>
           <div className="form-content">
             <label htmlFor="servingType">Serving Type: </label>
