@@ -12,7 +12,9 @@ class RecipeForm extends Component {
       recipeServings: 0,
       recipePrepTime: 0,
       recipeCookTime: 0,
-      recipeMethod: {}
+      recipeMethod: {},
+      methodStepCounter: 0,
+      ingredientCounter: 0
     }
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -23,6 +25,8 @@ class RecipeForm extends Component {
     this.handleCookTimeChange = this.handleCookTimeChange.bind(this);
     this.handleMethodChange = this.handleMethodChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);   
+    this.handleStepClick = this.handleStepClick.bind(this);
+    this.handleIngredientClick = this.handleIngredientClick.bind(this);
   }
 
   handleNameChange(evt) {
@@ -70,6 +74,15 @@ class RecipeForm extends Component {
     console.log(detailsToSubmit);
 
     evt.target.reset();
+  }
+
+  handleStepClick(evt){
+    evt.preventDefault();
+    this.setState({methodStepCounter: this.state.methodStepCounter + 1}, () => console.log(this.state.methodStepCounter));
+  }
+  handleIngredientClick(evt){
+    evt.preventDefault();
+    this.setState({ingredientCounter: this.state.ingredientCounter + 1}, () => console.log(this.state.ingredientCounter));
   }
 
   render() {
@@ -147,9 +160,11 @@ class RecipeForm extends Component {
           </div>
           <div className="form-content-bordered">
             <p>Ingredients</p>
+            <button onClick={this.handleIngredientClick}>Add Ingredient</button>
           </div>
           <div className="form-content-bordered">
             <p>Method</p>
+            <button onClick={this.handleStepClick}>Add Step</button>
           </div>
 
           <div className="form-content">
