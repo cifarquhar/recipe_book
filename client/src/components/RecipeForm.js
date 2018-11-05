@@ -28,6 +28,7 @@ class RecipeForm extends Component {
     this.handleStepClick = this.handleStepClick.bind(this);
     this.handleIngredientClick = this.handleIngredientClick.bind(this);
     this.mapMethodComponents = this.mapMethodComponents.bind(this);
+    this.handleStepInput = this.handleStepInput.bind(this);
   }
 
   handleNameChange(evt) {
@@ -74,6 +75,17 @@ class RecipeForm extends Component {
 
     console.log(detailsToSubmit);
 
+    fetch("http://localhost:8080/recipes", {
+      method: "POST",
+      body: JSON.stringify(detailsToSubmit),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => { return res })
+      .catch(err => console.log(err))
+
     evt.target.reset();
   }
 
@@ -86,11 +98,22 @@ class RecipeForm extends Component {
     this.setState({ingredientCounter: this.state.ingredientCounter + 1});
   }
 
+  handleStepInput(evt){
+    let currentMethod = this.state.recipeMethod;
+    currentMethod[evt.target.id.split("").pop()] = evt.target.value;
+    this.setState({recipeMethod: currentMethod});
+  }
+
   mapMethodComponents(){
     let methodElements = [];
 
     for (let i = 0; i < this.state.methodStepCounter; i++){
-      const methodElement = <textarea type="text" placeholder="Add details..."/>
+      const methodElement = <textarea 
+                              type="text" 
+                              placeholder="Add details..." 
+                              id={`step-${i + 1}`}
+                              onChange={this.handleStepInput}
+                              />
       methodElements.push(methodElement);
     }
 
