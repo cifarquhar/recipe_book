@@ -27,6 +27,7 @@ class RecipeForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);   
     this.handleStepClick = this.handleStepClick.bind(this);
     this.handleIngredientClick = this.handleIngredientClick.bind(this);
+    this.mapMethodComponents = this.mapMethodComponents.bind(this);
   }
 
   handleNameChange(evt) {
@@ -78,11 +79,29 @@ class RecipeForm extends Component {
 
   handleStepClick(evt){
     evt.preventDefault();
-    this.setState({methodStepCounter: this.state.methodStepCounter + 1}, () => console.log(this.state.methodStepCounter));
+    this.setState({methodStepCounter: this.state.methodStepCounter + 1});
   }
   handleIngredientClick(evt){
     evt.preventDefault();
-    this.setState({ingredientCounter: this.state.ingredientCounter + 1}, () => console.log(this.state.ingredientCounter));
+    this.setState({ingredientCounter: this.state.ingredientCounter + 1});
+  }
+
+  mapMethodComponents(){
+    let methodElements = [];
+
+    for (let i = 0; i < this.state.methodStepCounter; i++){
+      const methodElement = <textarea type="text" placeholder="Add details..."/>
+      methodElements.push(methodElement);
+    }
+
+    return methodElements.map((element, index) => {
+      return(
+        <div key={index}>
+          <label htmlFor={`step-${index + 1}`}>{index + 1}: </label>
+          {element}
+        </div>
+      )
+    })
   }
 
   render() {
@@ -93,6 +112,8 @@ class RecipeForm extends Component {
         <option key={index} value={category}>{category}</option>
       )
     });
+
+    const steps = this.mapMethodComponents();
 
     return (
       <div className="new-recipe-div">
@@ -164,6 +185,7 @@ class RecipeForm extends Component {
           </div>
           <div className="form-content-bordered">
             <p>Method</p>
+            {steps}
             <button onClick={this.handleStepClick}>Add Step</button>
           </div>
 
