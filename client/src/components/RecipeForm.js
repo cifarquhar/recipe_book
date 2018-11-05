@@ -13,7 +13,7 @@ class RecipeForm extends Component {
       recipePrepTime: 0,
       recipeCookTime: 0,
       recipeMethod: {},
-      recipeIngredients: [],
+      recipeIngredients: {},
       methodStepCounter: 0,
       ingredientCounter: 0,
       availableIngredients: []
@@ -31,6 +31,7 @@ class RecipeForm extends Component {
     this.handleIngredientClick = this.handleIngredientClick.bind(this);
     this.mapMethodComponents = this.mapMethodComponents.bind(this);
     this.handleStepInput = this.handleStepInput.bind(this);
+    this.handleIngredientInput = this.handleIngredientInput.bind(this);
   }
 
   componentDidMount(){
@@ -115,6 +116,12 @@ class RecipeForm extends Component {
     this.setState({recipeMethod: currentMethod});
   }
 
+  handleIngredientInput(evt) {
+    let currentIngredients = this.state.recipeIngredients;
+    currentIngredients[evt.target.id.split("").pop()] = evt.target.value;
+    this.setState({ recipeIngredients: currentIngredients });
+  }
+
   mapMethodComponents(){
     let methodElements = [];
 
@@ -150,7 +157,7 @@ class RecipeForm extends Component {
       const ingredientElement = <select 
                                   id={`ingredient-${i + 1}`} 
                                   name={`ingredient-${i + 1}`} 
-                                  onChange={(evt) => console.log(evt.target.value)}>
+                                  onChange={this.handleIngredientInput}>
         {options}
       </select>
       ingredientElements.push(ingredientElement);
