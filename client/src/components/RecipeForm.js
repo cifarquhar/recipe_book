@@ -106,7 +106,6 @@ class RecipeForm extends Component {
   }
   handleIngredientClick(evt){
     evt.preventDefault();
-    console.log("clicked")
     this.setState({ingredientCounter: this.state.ingredientCounter + 1});
   }
 
