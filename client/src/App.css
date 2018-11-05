@@ -82,3 +82,12 @@
   width: 70%;
   text-align: end;
 }
+
+.form-content-bordered{
+  margin: 2px;
+  margin-left: 15%;
+  width: 70%;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 25px;
+}

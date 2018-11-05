@@ -145,6 +145,12 @@ class RecipeForm extends Component {
               name="cookTime" 
             />
           </div>
+          <div className="form-content-bordered">
+            <p>Ingredients</p>
+          </div>
+          <div className="form-content-bordered">
+            <p>Method</p>
+          </div>
 
           <div className="form-content">
             <input type="submit" value="Add Recipe" />
