@@ -13,8 +13,10 @@ class RecipeForm extends Component {
       recipePrepTime: 0,
       recipeCookTime: 0,
       recipeMethod: {},
+      recipeIngredients: [],
       methodStepCounter: 0,
-      ingredientCounter: 0
+      ingredientCounter: 0,
+      availableIngredients: []
     }
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -29,6 +31,15 @@ class RecipeForm extends Component {
     this.handleIngredientClick = this.handleIngredientClick.bind(this);
     this.mapMethodComponents = this.mapMethodComponents.bind(this);
     this.handleStepInput = this.handleStepInput.bind(this);
+  }
+
+  componentDidMount(){
+    fetch("http://localhost:8080/ingredients", {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(res => this.setState({availableIngredients: res._embedded.ingredients}))
+      .catch(err => console.log(err))
   }
 
   handleNameChange(evt) {
@@ -95,6 +106,7 @@ class RecipeForm extends Component {
   }
   handleIngredientClick(evt){
     evt.preventDefault();
+    console.log("clicked")
     this.setState({ingredientCounter: this.state.ingredientCounter + 1});
   }
 
@@ -112,6 +124,7 @@ class RecipeForm extends Component {
                               type="text" 
                               placeholder="Add details..." 
                               id={`step-${i + 1}`}
+                              name={`step-${i + 1}`}
                               onChange={this.handleStepInput}
                               />
       methodElements.push(methodElement);
@@ -127,6 +140,34 @@ class RecipeForm extends Component {
     })
   }
 
+  mapIngredientComponents(){
+    let ingredientElements = [];
+
+    let options = this.state.availableIngredients.map((ingredient, index) => {
+      return <option key={index} value={ingredient._links.self.href}>{ingredient.name}</option>
+    })
+
+    for (let i = 0; i < this.state.ingredientCounter; i++) {
+      const ingredientElement = <select 
+                                  id={`ingredient-${i + 1}`} 
+                                  name={`ingredient-${i + 1}`} 
+                                  onChange={(evt) => console.log(evt.target.value)}>
+        {options}
+      </select>
+      ingredientElements.push(ingredientElement);
+    }
+
+    return ingredientElements.map((element, index) => {
+      return(
+        <div key={index}>
+          <label htmlFor={`ingredient-${index + 1}`}>{index + 1}: </label>
+          {element}
+        </div>
+      )
+    })
+
+  }
+
   render() {
     const s = this.state;
 
@@ -137,6 +178,7 @@ class RecipeForm extends Component {
     });
 
     const steps = this.mapMethodComponents();
+    const ingredients = this.mapIngredientComponents();
 
     return (
       <div className="new-recipe-div">
@@ -204,6 +246,7 @@ class RecipeForm extends Component {
           </div>
           <div className="form-content-bordered">
             <p>Ingredients</p>
+            {ingredients}
             <button onClick={this.handleIngredientClick}>Add Ingredient</button>
           </div>
           <div className="form-content-bordered">
