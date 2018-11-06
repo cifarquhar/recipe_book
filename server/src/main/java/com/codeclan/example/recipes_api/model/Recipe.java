@@ -47,11 +47,11 @@ public class Recipe implements Serializable {
     public Recipe() {
     }
 
-    public Recipe(@NotNull String name, Category category, String description, int servings, int prepTime, int cookTime, HashMap<Integer, String> method) {
+    public Recipe(@NotNull String name, Category category, String description, boolean favourite, int servings, int prepTime, int cookTime, HashMap<Integer, String> method) {
         this.name = name;
         this.category = category;
         this.description = description;
-        this.favourite = false;
+        this.favourite = favourite;
         this.servings = servings;
         this.prepTime = prepTime;
         this.cookTime = cookTime;

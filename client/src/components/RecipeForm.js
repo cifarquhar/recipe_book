@@ -80,6 +80,7 @@ class RecipeForm extends Component {
       name: s.recipeName,
       category: s.recipeCategory,
       description: s.recipeDescription,
+      favourite: false,
       servings: s.recipeServings,
       prepTime: s.recipePrepTime,
       cookTime: s.recipeCookTime,
