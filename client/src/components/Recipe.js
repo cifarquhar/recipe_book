@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "./Modal";
+import Star from "./Star";
 
 class Recipe extends React.Component{
 
@@ -60,7 +61,7 @@ class Recipe extends React.Component{
           <div className="summary-header">
             <div className="summary-details">{recipe.name}</div>
             <div className="summary-details">{recipe.category.charAt(0) + recipe.category.slice(1).toLowerCase()}</div>
-            {/* <div className="favourite-logo"><Star beer={beer} /></div> */}
+            <div className="favourite-logo"><Star recipe={recipe} /></div>
           </div>
           <p>{recipe.description}</p>
           <Modal show={this.state.showModal} handleClose={(this.hideModal.bind(this))} handleDelete={this.deleteRecipe.bind(this)}>

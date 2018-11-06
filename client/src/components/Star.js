@@ -2,17 +2,33 @@ import React from "react";
 
 class Star extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      name: props.recipe.name,
+      category: props.recipe.category,
+      description: props.recipe.description,
+      favourite: props.recipe.favourite,
+      servings: props.recipe.servings,
+      prepTime: props.recipe.prepTime,
+      cookTime: props.recipe.cookTime,
+      method: props.recipe.method
+    }
+  }
+
   handleClick(event) {
     event.stopPropagation();
-    this.props.beer.favourite = !this.props.beer.favourite;
-    this.makePUTRequest();
+    this.setState({ favourite: !this.state.favourite }, () => this.makePUTRequest());
+    // this.makePUTRequest();
   }
 
   makePUTRequest() {
-    let data = this.props.beer;
-    fetch(`http://localhost:8080/beers/${this.props.beer.id}`, {
+
+    const detailsToSubmit = this.state;
+    console.log(detailsToSubmit)
+    fetch(`http://localhost:8080/recipes/${this.props.recipe.id}`, {
       method: "PUT",
-      body: JSON.stringify(data),
+      body: JSON.stringify(detailsToSubmit),
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -26,7 +42,7 @@ class Star extends React.Component {
   render() {
     return (
       <div onClick={this.handleClick.bind(this)}>
-        {this.props.beer.favourite ? `\u2B50` : '\u2606'}
+        {this.props.recipe.favourite ? `\u2B50` : '\u2606'}
       </div>
     )
   }
