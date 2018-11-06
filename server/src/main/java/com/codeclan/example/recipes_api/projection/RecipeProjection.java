@@ -9,6 +9,7 @@ import java.util.List;
 
 @Projection(name = "recipeProjection", types = Recipe.class)
 public interface RecipeProjection {
+    Long getId();
     String getName();
     String getDescription();
     Category getCategory();
