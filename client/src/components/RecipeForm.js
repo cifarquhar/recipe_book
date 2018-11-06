@@ -153,6 +153,8 @@ class RecipeForm extends Component {
       return <option key={index} value={ingredient._links.self.href}>{ingredient.name}</option>
     })
 
+    options.unshift(<option key={1000}>Select an ingredient</option>)
+
     for (let i = 0; i < this.state.ingredientCounter; i++) {
       const ingredientElement = <select 
                                   id={`ingredient-${i + 1}`} 
