@@ -21,9 +21,18 @@ class RecipeList extends React.Component {
       .then(data => this.setState({ isLoaded: true, recipes: this.mapRecipeData(data._embedded.recipes) }));
   }
 
+  deleteRecipe(recipe) {
+    console.log(recipe)
+    this.recipeIDToDelete = recipe.id
+    fetch(`http://localhost:8080/recipes/${this.recipeIDToDelete}`, {
+      method: "DELETE"
+    })
+      .catch(err => console.log(err));
+  }
+
   mapRecipeData(recipes) {
     return recipes.map(((recipe, index) => {
-      return <Recipe key={index} recipe={recipe} />;
+      return <Recipe key={index} recipe={recipe} handleDelete={this.deleteRecipe.bind(this)}/>;
     }));
   }
 

@@ -25,6 +25,12 @@ class Recipe extends React.Component{
     })
   }
 
+  deleteRecipe(event){
+    const p = this.props
+    p.handleDelete(p.recipe)
+    this.hideModal(event)
+  }
+
 
   render(){
     const recipe = this.props.recipe;
@@ -38,7 +44,7 @@ class Recipe extends React.Component{
             {/* <div className="favourite-logo"><Star beer={beer} /></div> */}
           </div>
           <p>{recipe.description}</p>
-          <Modal show={this.state.showModal} handleClose={(this.hideModal.bind(this))}>
+          <Modal show={this.state.showModal} handleClose={(this.hideModal.bind(this))} handleDelete={this.deleteRecipe.bind(this)}>
             <p>{recipe.name}</p>
             <div style={{ display: "inline-flex" }}>
               <div className="ingredient-div">
