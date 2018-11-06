@@ -13,6 +13,7 @@ public interface RecipeProjection {
     String getName();
     String getDescription();
     Category getCategory();
+    boolean isFavourite();
     int getServings();
     int getPrepTime();
     int getCookTime();
