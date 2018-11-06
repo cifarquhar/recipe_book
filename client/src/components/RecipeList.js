@@ -7,7 +7,7 @@ class RecipeList extends React.Component {
     super(props);
     this.state = {
       isLoaded: false,
-      recipes: [],
+      allRecipes: [],
       filtered: false,
       filteredRecipes: []
     };
@@ -22,7 +22,7 @@ class RecipeList extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({ 
                           isLoaded: true, 
-                          recipes: this.mapRecipeData(data._embedded.recipes), 
+                          allRecipes: this.mapRecipeData(data._embedded.recipes), 
                           filteredRecipes: this.mapRecipeData(this.filterRecipes(data._embedded.recipes))
                         }));
   }
@@ -53,7 +53,7 @@ class RecipeList extends React.Component {
   }
 
   render() {
-    const { isLoaded, recipes, filtered, filteredRecipes } = this.state;
+    const { isLoaded, allRecipes, filtered, filteredRecipes } = this.state;
 
     if (!isLoaded) {
       return <p>Waiting for recipe data...</p>
@@ -64,7 +64,7 @@ class RecipeList extends React.Component {
     return (
       <div>
         <button onClick={this.flipFilterState.bind(this)}>{buttonText}</button>
-        {filtered ? filteredRecipes : recipes}
+        {filtered ? filteredRecipes : allRecipes}
       </div>
     )
   }
