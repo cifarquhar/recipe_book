@@ -13,7 +13,7 @@ class RecipeForm extends Component {
       recipePrepTime: 0,
       recipeCookTime: 0,
       recipeMethod: {},
-      recipeIngredients: {},
+      recipeIngredients: [],
       methodStepCounter: 0,
       ingredientCounter: 0,
       availableIngredients: []
@@ -32,6 +32,7 @@ class RecipeForm extends Component {
     this.mapMethodComponents = this.mapMethodComponents.bind(this);
     this.handleStepInput = this.handleStepInput.bind(this);
     this.handleIngredientInput = this.handleIngredientInput.bind(this);
+    this.handleIngredientQuantityChange = this.handleIngredientQuantityChange.bind(this);
   }
 
   componentDidMount(){
@@ -107,7 +108,10 @@ class RecipeForm extends Component {
   }
   handleIngredientClick(evt){
     evt.preventDefault();
-    this.setState({ingredientCounter: this.state.ingredientCounter + 1});
+    const newCounter = this.state.ingredientCounter + 1;
+    let currentIngredients = this.state.recipeIngredients;
+    this.setState({ingredientCounter: newCounter});
+    currentIngredients.push({number: newCounter, quantity: null, url: null})
   }
 
   handleStepInput(evt){
@@ -118,8 +122,14 @@ class RecipeForm extends Component {
 
   handleIngredientInput(evt) {
     let currentIngredients = this.state.recipeIngredients;
-    currentIngredients[evt.target.id.split("").pop()] = evt.target.value;
+    currentIngredients[evt.target.id.split("").pop() - 1].url = evt.target.value;
     this.setState({ recipeIngredients: currentIngredients });
+  }
+
+  handleIngredientQuantityChange(evt){
+    let currentIngredients = this.state.recipeIngredients;
+    currentIngredients[evt.target.id.split("").pop() - 1].quantity = parseInt(evt.target.value);
+    this.setState({recipeIngredients: currentIngredients});
   }
 
   mapMethodComponents(){
@@ -169,6 +179,12 @@ class RecipeForm extends Component {
       return(
         <div key={index}>
           <label htmlFor={`ingredient-${index + 1}`}>{index + 1}: </label>
+          <input 
+            type="number" 
+            min="0" 
+            placeholder="0" 
+            id={`ingredient-quantity-${index + 1}`}
+            onChange={this.handleIngredientQuantityChange}></input>
           {element}
         </div>
       )
