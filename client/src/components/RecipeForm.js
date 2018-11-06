@@ -86,8 +86,6 @@ class RecipeForm extends Component {
       method: s.recipeMethod
     };
 
-    console.log(detailsToSubmit);
-
     fetch("http://localhost:8080/recipes", {
       method: "POST",
       body: JSON.stringify(detailsToSubmit),
@@ -96,7 +94,23 @@ class RecipeForm extends Component {
         "Content-Type": "application/json"
       }
     })
-      .then(res => console.log(res.json()))
+      .then(res => res.json())
+      .then(data => {this.state.recipeIngredients.forEach((recipIngredient) => {
+        let pairingDetails = {
+          quantity: recipIngredient.quantity,
+          recipe: data._links.self.href,
+          ingredient: recipIngredient.url
+        }
+        fetch("http://localhost:8080/pairings", {
+          method: "POST",
+          body: JSON.stringify(pairingDetails),
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        })
+        .catch(err => console.log(err));
+      })})
       .catch(err => console.log(err))
 
     evt.target.reset();
