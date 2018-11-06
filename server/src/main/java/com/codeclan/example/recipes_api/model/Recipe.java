@@ -26,6 +26,9 @@ public class Recipe implements Serializable {
     private String description;
 
     @Column
+    private boolean favourite;
+
+    @Column
     private int servings;
 
     @Column
@@ -48,6 +51,7 @@ public class Recipe implements Serializable {
         this.name = name;
         this.category = category;
         this.description = description;
+        this.favourite = false;
         this.servings = servings;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
@@ -125,5 +129,13 @@ public class Recipe implements Serializable {
 
     public void setMethod(HashMap<Integer, String> method) {
         this.method = method;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 }
