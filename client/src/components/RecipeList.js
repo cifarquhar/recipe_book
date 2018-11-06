@@ -8,7 +8,7 @@ class RecipeList extends React.Component {
     this.state = {
       isLoaded: false,
       allRecipes: [],
-      filtered: false,
+      showFavourites: false,
       filteredRecipes: []
     };
   }
@@ -49,22 +49,22 @@ class RecipeList extends React.Component {
   }
 
   flipFilterState(){
-    this.setState({filtered: !this.state.filtered});
+    this.setState({ showFavourites: !this.state.showFavourites});
   }
 
   render() {
-    const { isLoaded, allRecipes, filtered, filteredRecipes } = this.state;
+    const { isLoaded, allRecipes, showFavourites, filteredRecipes } = this.state;
 
     if (!isLoaded) {
       return <p>Waiting for recipe data...</p>
     }
 
-    const buttonText = filtered ? "Show all" : "Show favourites"
+    const buttonText = showFavourites ? "Show all" : "Show favourites"
 
     return (
       <div>
         <button onClick={this.flipFilterState.bind(this)}>{buttonText}</button>
-        {filtered ? filteredRecipes : allRecipes}
+        {showFavourites ? filteredRecipes : allRecipes}
       </div>
     )
   }
