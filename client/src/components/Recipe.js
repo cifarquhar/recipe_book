@@ -25,6 +25,27 @@ class Recipe extends React.Component{
     })
   }
 
+  mapIngredients(){
+    const mappedIngredients = this.props.recipe.pairings.map((pairing, index) => {
+      return (<li key={index}>{pairing.quantity}{this.getMeasurementUnit(pairing.ingredient[0].servingType)} {pairing.ingredient[0].name}</li>)
+    })
+
+    return (
+      <ul>{mappedIngredients}</ul>
+    )
+  }
+
+  getMeasurementUnit(servingType){
+    switch (servingType){
+      case "VOLUME":
+        return "ml"
+      case "WEIGHT":
+        return "g"
+      default:
+        return ""
+    }
+  }
+
   deleteRecipe(event){
     const p = this.props
     p.handleDelete(p.recipe)
@@ -53,7 +74,8 @@ class Recipe extends React.Component{
                 <p>Cooking Time: {recipe.cookTime} mins</p>
               </div>
               <div className="ingredient-div">
-                <p>Ingredients will go here</p>
+                <p><strong>Ingredients:</strong></p>
+                {this.mapIngredients()}
               </div>
             </div>
             <div>
