@@ -27,12 +27,10 @@ class Recipe extends React.Component{
 
   mapIngredients(){
     const mappedIngredients = this.props.recipe.pairings.map((pairing, index) => {
-      return (<li key={index}>{pairing.quantity}{this.getMeasurementUnit(pairing.ingredient[0].servingType)} {pairing.ingredient[0].name}</li>)
-    })
+      return (<p key={index}>{pairing.quantity}{this.getMeasurementUnit(pairing.ingredient[0].servingType)} {pairing.ingredient[0].name}</p>)
+    });
 
-    return (
-      <ul>{mappedIngredients}</ul>
-    )
+    return mappedIngredients;
   }
 
   getMeasurementUnit(servingType){
