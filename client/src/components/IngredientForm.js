@@ -33,7 +33,7 @@ class IngredientForm extends Component {
 
     this.setState({
       ingredientName: "",
-      ingredientServingType: ""
+      ingredientServingType: SERVINGTYPES[0].toUpperCase()
     });
     evt.target.reset();
 
