@@ -27,7 +27,7 @@ class IngredientForm extends Component {
     evt.preventDefault();
     
     const dataToSend = {
-      name: this.state.ingredientName,
+      name: this.state.ingredientName.toLowerCase(),
       servingType: this.state.ingredientServingType
     };
 
