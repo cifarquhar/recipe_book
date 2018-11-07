@@ -1,5 +1,6 @@
 import React from "react";
 import Recipe from "./Recipe";
+import RECIPECATEGORIES from "../constants/recipeCategories";
 
 class RecipeList extends React.Component {
 
@@ -22,8 +23,8 @@ class RecipeList extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({ 
                           isLoaded: true, 
-                          allRecipes: this.mapRecipeData(data._embedded.recipes), 
-                          filteredRecipes: this.mapRecipeData(this.filterRecipes(data._embedded.recipes))
+                          allRecipes: data._embedded.recipes, 
+                          filteredRecipes: this.filterFavouriteRecipes(data._embedded.recipes)
                         }));
   }
 
@@ -42,10 +43,22 @@ class RecipeList extends React.Component {
     }));
   }
 
-  filterRecipes(recipes){
+  filterFavouriteRecipes(recipes){
     return recipes.filter((recipe) => {
       return recipe.favourite;
     });
+  }
+
+  filterRecipesByCategory(evt){
+    let allRecipes = this.state.allRecipes;
+    if (evt.target.value === "Everything"){
+      return allRecipes;
+    }
+    else {
+     return allRecipes.filter((recipe) => {
+        return recipe.category === evt.target.value.toUpperCase();
+      });
+    }
   }
 
   flipFilterState(){
@@ -54,6 +67,15 @@ class RecipeList extends React.Component {
 
   render() {
     const { isLoaded, allRecipes, showFavourites, filteredRecipes } = this.state;
+
+    const mappedRecipeData = this.mapRecipeData(allRecipes);
+    const mappedFilteredRecipeData = this.mapRecipeData(filteredRecipes);
+
+    const categoryOptions = RECIPECATEGORIES.map((category, index) => {
+      return <option key={index} value={category}>{category.charAt(0) + category.slice(1).toLowerCase()}</option>
+    })
+
+    categoryOptions.unshift(<option key={1000} value={null}>Everything</option>)
 
     if (!isLoaded) {
       return <p>Waiting for recipe data...</p>
@@ -64,7 +86,9 @@ class RecipeList extends React.Component {
     return (
       <div>
         <button onClick={this.flipFilterState.bind(this)}>{buttonText}</button>
-        {showFavourites ? filteredRecipes : allRecipes}
+        <br/>
+        <p>Show only: <select onChange={this.filterRecipesByCategory.bind(this)}>{categoryOptions}</select></p>
+        {showFavourites ? mappedFilteredRecipeData : mappedRecipeData}
       </div>
     )
   }
