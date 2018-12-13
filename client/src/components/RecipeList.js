@@ -10,7 +10,8 @@ class RecipeList extends React.Component {
       isLoaded: false,
       allRecipes: [],
       showFavourites: false,
-      filteredRecipes: []
+      filteredRecipes: [],
+      categoryFilter: "Everything"
     };
   }
 
@@ -49,14 +50,13 @@ class RecipeList extends React.Component {
     });
   }
 
-  filterRecipesByCategory(evt){
-    let allRecipes = this.state.allRecipes;
-    if (evt.target.value === "Everything"){
-      return allRecipes;
+  filterRecipesByCategory(recipes, filter){
+    if (filter === "Everything"){
+      return this.state.allRecipes;
     }
     else {
-     return allRecipes.filter((recipe) => {
-        return recipe.category === evt.target.value.toUpperCase();
+     return recipes.filter((recipe) => {
+        return recipe.category === filter.toUpperCase();
       });
     }
   }
@@ -65,11 +65,19 @@ class RecipeList extends React.Component {
     this.setState({ showFavourites: !this.state.showFavourites});
   }
 
-  render() {
-    const { isLoaded, allRecipes, showFavourites, filteredRecipes } = this.state;
+  setCategoryFilter(evt){
+    this.setState({ categoryFilter: evt.target.value })
+  }
 
-    const mappedRecipeData = this.mapRecipeData(allRecipes);
-    const mappedFilteredRecipeData = this.mapRecipeData(filteredRecipes);
+  render() {
+    const { isLoaded, allRecipes, showFavourites, filteredRecipes, categoryFilter } = this.state;
+    
+    const recipesFilteredByCategory = this.filterRecipesByCategory(allRecipes, categoryFilter);
+    const favouriteRecipesFilteredByCategory = this.filterRecipesByCategory(filteredRecipes, categoryFilter);
+
+    const mappedRecipeData = this.mapRecipeData(recipesFilteredByCategory);
+    const mappedFilteredRecipeData = this.mapRecipeData(favouriteRecipesFilteredByCategory);
+
 
     const categoryOptions = RECIPECATEGORIES.map((category, index) => {
       return <option key={index} value={category}>{category.charAt(0) + category.slice(1).toLowerCase()}</option>
@@ -83,12 +91,17 @@ class RecipeList extends React.Component {
 
     const buttonText = showFavourites ? "Show all" : "Show favourites"
 
+    console.log("recipesFilteredByCategory", recipesFilteredByCategory)
+    console.log("favouriteRecipesFilteredByCategory", favouriteRecipesFilteredByCategory)
+    console.log("mappedRecipeData", mappedRecipeData)
+    console.log("mappedFilteredRecipeData", mappedFilteredRecipeData)
+
     return (
       <>
         <button onClick={this.flipFilterState.bind(this)}>{buttonText}</button>
         <br/>
-        <p>Show only: <select onChange={this.filterRecipesByCategory.bind(this)}>{categoryOptions}</select></p>
-        {showFavourites ? mappedFilteredRecipeData : mappedRecipeData}
+        <p>Show only: <select onChange={this.setCategoryFilter.bind(this)}>{categoryOptions}</select></p>
+        {showFavourites ? mappedRecipeData : mappedFilteredRecipeData}
       </>
     )
   }
@@ -97,5 +110,4 @@ class RecipeList extends React.Component {
 
 export default RecipeList;
 
-// TODO: refactor filtering logic to set filteredRecipes to the result. Filter that again during render if 
-// favourite selected
+// TODO: Fix filtering: favourites no longer working
