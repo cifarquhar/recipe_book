@@ -56,7 +56,7 @@ class Recipe extends React.Component{
     const recipe = this.props.recipe;
 
     return(
-      <div>
+      <>
         <div className="recipe-summary" onClick={this.showModal.bind(this)}>
           <div className="summary-header">
             <div className="summary-details">{recipe.name}</div>
@@ -83,7 +83,7 @@ class Recipe extends React.Component{
             </div>
           </Modal>
         </div>
-      </div>
+      </>
     )
   }
 

@@ -84,15 +84,18 @@ class RecipeList extends React.Component {
     const buttonText = showFavourites ? "Show all" : "Show favourites"
 
     return (
-      <div>
+      <>
         <button onClick={this.flipFilterState.bind(this)}>{buttonText}</button>
         <br/>
         <p>Show only: <select onChange={this.filterRecipesByCategory.bind(this)}>{categoryOptions}</select></p>
         {showFavourites ? mappedFilteredRecipeData : mappedRecipeData}
-      </div>
+      </>
     )
   }
 
 }
 
 export default RecipeList;
+
+// TODO: refactor filtering logic to set filteredRecipes to the result. Filter that again during render if 
+// favourite selected

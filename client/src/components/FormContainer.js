@@ -19,10 +19,10 @@ class FormContainer extends Component{
     const currentSelection = this.state.recipeSelected;
 
     return(
-      <div>
+      <>
         <button onClick={this.flipFormType.bind(this)}>{currentSelection ? "Add Ingredient" : "Add Recipe"}</button>
         {currentSelection ? <RecipeForm /> : <IngredientForm />}
-      </div>
+      </>
     )
   }
 
