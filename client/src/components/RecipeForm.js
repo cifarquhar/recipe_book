@@ -28,6 +28,7 @@ class RecipeForm extends Component {
     this.handleMethodChange = this.handleMethodChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);   
     this.handleStepClick = this.handleStepClick.bind(this);
+    this.removeStepClick = this.removeStepClick.bind(this);
     this.handleIngredientClick = this.handleIngredientClick.bind(this);
     this.mapMethodComponents = this.mapMethodComponents.bind(this);
     this.handleStepInput = this.handleStepInput.bind(this);
@@ -121,6 +122,12 @@ class RecipeForm extends Component {
     evt.preventDefault();
     this.setState({methodStepCounter: this.state.methodStepCounter + 1});
   }
+
+  removeStepClick(evt){
+    evt.preventDefault();
+    this.setState({methodStepCounter: this.state.methodStepCounter - 1});
+  }
+
   handleIngredientClick(evt){
     evt.preventDefault();
     const newCounter = this.state.ingredientCounter + 1;
@@ -218,6 +225,7 @@ class RecipeForm extends Component {
 
     const steps = this.mapMethodComponents();
     const ingredients = this.mapIngredientComponents();
+    const removeStepButton = (<button onClick={this.removeStepClick}>Remove Step</button>)
 
     return (
       <div className="new-recipe-div">
@@ -292,6 +300,7 @@ class RecipeForm extends Component {
             <p>Method</p>
             {steps}
             <button onClick={this.handleStepClick}>Add Step</button>
+            {this.state.methodStepCounter > 0 ? removeStepButton: null}
           </div>
 
           <div className="form-content">
