@@ -30,6 +30,7 @@ class RecipeForm extends Component {
     this.handleStepClick = this.handleStepClick.bind(this);
     this.removeStepClick = this.removeStepClick.bind(this);
     this.handleIngredientClick = this.handleIngredientClick.bind(this);
+    this.removeIngredientClick = this.removeIngredientClick.bind(this);
     this.mapMethodComponents = this.mapMethodComponents.bind(this);
     this.handleStepInput = this.handleStepInput.bind(this);
     this.handleIngredientInput = this.handleIngredientInput.bind(this);
@@ -125,9 +126,7 @@ class RecipeForm extends Component {
 
   removeStepClick(evt){
     let currentMethod = this.state.recipeMethod
-    console.log(currentMethod)
     delete currentMethod[Object.keys(currentMethod).length]
-    console.log(currentMethod)
     evt.preventDefault();
     this.setState({methodStepCounter: this.state.methodStepCounter - 1, recipeMethod: currentMethod});
   }
@@ -138,6 +137,14 @@ class RecipeForm extends Component {
     let currentIngredients = this.state.recipeIngredients;
     this.setState({ingredientCounter: newCounter});
     currentIngredients.push({number: newCounter, quantity: null, url: null})
+  }
+
+  removeIngredientClick(evt){
+    evt.preventDefault();
+    const newCounter = this.state.ingredientCounter - 1;
+    let currentIngredients = this.state.recipeIngredients;
+    currentIngredients.pop();
+    this.setState({ingredientCounter: newCounter, recipeIngredients: currentIngredients});
   }
 
   handleStepInput(evt){
@@ -230,6 +237,7 @@ class RecipeForm extends Component {
     const steps = this.mapMethodComponents();
     const ingredients = this.mapIngredientComponents();
     const removeStepButton = (<button onClick={this.removeStepClick}>Remove Step</button>)
+    const removeIngredientButton = (<button onClick={this.removeIngredientClick}>Remove Ingredient</button>)
 
     return (
       <div className="new-recipe-div">
@@ -299,6 +307,7 @@ class RecipeForm extends Component {
             <p>Ingredients</p>
             {ingredients}
             <button onClick={this.handleIngredientClick}>Add Ingredient</button>
+            {this.state.ingredientCounter > 0 ? removeIngredientButton : null}
           </div>
           <div className="form-content-bordered">
             <p>Method</p>
