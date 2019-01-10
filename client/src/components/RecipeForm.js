@@ -124,8 +124,12 @@ class RecipeForm extends Component {
   }
 
   removeStepClick(evt){
+    let currentMethod = this.state.recipeMethod
+    console.log(currentMethod)
+    delete currentMethod[Object.keys(currentMethod).length]
+    console.log(currentMethod)
     evt.preventDefault();
-    this.setState({methodStepCounter: this.state.methodStepCounter - 1});
+    this.setState({methodStepCounter: this.state.methodStepCounter - 1, recipeMethod: currentMethod});
   }
 
   handleIngredientClick(evt){
