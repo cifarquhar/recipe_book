@@ -29,10 +29,17 @@ class RecipeList extends React.Component {
                         }));
   }
 
-  deleteRecipe(recipe) {
-    console.log(recipe)
-    this.recipeIDToDelete = recipe.id
-    fetch(`http://localhost:8080/recipes/${this.recipeIDToDelete}`, {
+  async deleteRecipe(recipe) {
+    const pairingLinks = recipe.pairings.map((pairing) => {
+      return pairing._links.self.href.slice(0, -13)
+    })
+    pairingLinks.forEach((link) => {
+      fetch(link, {
+        method: "DELETE"
+      })
+      .catch(err => console.log(err));
+    })
+    await fetch(`http://localhost:8080/recipes/${recipe.id}`, {
       method: "DELETE"
     })
       .catch(err => console.log(err));
