@@ -89,6 +89,8 @@ class RecipeList extends React.Component {
       return <option key={index} value={category}>{category.charAt(0) + category.slice(1).toLowerCase()}</option>
     })
 
+    const nothingFound = <p>Nothing matches that filter!</p>
+
     categoryOptions.unshift(<option key={1000} value={null}>Everything</option>)
 
     if (!isLoaded) {
@@ -97,12 +99,17 @@ class RecipeList extends React.Component {
 
     const buttonText = showFavourites ? "Show all" : "Show favourites"
 
+    console.log(mappedFilteredRecipeData.length)
+
     return (
       <>
         <button onClick={this.flipFilterState.bind(this)}>{buttonText}</button>
         <br/>
         <p>Show only: <select onChange={this.setCategoryFilter.bind(this)}>{categoryOptions}</select></p>
-        {showFavourites ? mappedFilteredRecipeData : mappedRecipeData }
+        {showFavourites ? 
+          (!mappedFilteredRecipeData.length ? nothingFound : mappedFilteredRecipeData) 
+          : 
+          (!mappedRecipeData.length ? nothingFound : mappedRecipeData)}
       </>
     )
   }
