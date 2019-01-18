@@ -19,7 +19,6 @@ class Star extends React.Component {
   handleClick(event) {
     event.stopPropagation();
     this.setState({ favourite: !this.state.favourite }, () => this.makePUTRequest());
-    // this.makePUTRequest();
   }
 
   makePUTRequest() {
@@ -36,13 +35,12 @@ class Star extends React.Component {
     })
       .then(res => { return res })
       .catch(err => console.log(err));
-    this.forceUpdate();
   }
 
   render() {
     return (
       <div onClick={this.handleClick.bind(this)}>
-        {this.props.recipe.favourite ? `\u2B50` : '\u2606'}
+        {this.state.favourite ? `\u2B50` : '\u2606'}
       </div>
     )
   }
